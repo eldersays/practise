@@ -1,0 +1,44 @@
+def apriori(Data,sup):
+    L = []
+    k = 1
+    L[k] = find_level_1(Data,sup)
+    while L[k] != []:
+        temp = find_next(L[k])
+        k = k+1
+        L[k] = check_sup(temp)
+
+def find_next(A):
+    after = []
+    for item_1 in A:
+        for item_2 in A:
+            diff = 0
+            for i in range(len(item_1)-1):
+                if item_1[i] != item_2[i]:
+                    diff = 1
+                    break
+            if diff == 0:
+                c= item_1
+                c.append(item_2[len(item_1)])
+                if check_pre(c,A) :
+                    after.append(c)
+
+    return after
+
+def check_pre(candidate,itemset):
+    check_exis = 1
+    for i in range(len(candidate)):
+        check = 0
+        temp = candidate
+        del(temp[i])
+        for item in itemset:
+            if item == temp:
+                check = 1
+                break
+        if check != 1:
+            check_exis == 0
+            break
+    return check_exis
+
+
+
+
